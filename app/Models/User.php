@@ -11,11 +11,12 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'phone',
-        'password',  // Make sure this is included for password
-    ];
+            'first_name',
+            'last_name',
+            'phone',
+            'password',  // Make sure this is included for password
+            'role'
+        ];
     public function stores()
     {
         return $this->hasMany(Store::class);

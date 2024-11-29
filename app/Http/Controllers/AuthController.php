@@ -27,6 +27,7 @@ class AuthController extends Controller
             'last_name' => $request->last_name,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),  // Hash the password
+            'role' => $request->role
         ]);
 
         // Return the newly created user as response
