@@ -22,3 +22,13 @@ Route::middleware(['auth:sanctum'])
         Route::get('/', [StoreController::class, "getAllStores"]);
         Route::get('/getMyStore', [StoreController::class, "getMyStore"])->middleware('isStoreOwner');
     });
+Route::middleware(['auth:sanctum'])->prefix('product')->group(function () {
+    Route::middleware(['isStoreOwner'])->group((function () {
+        Route::post('/', [ProductController::class, 'createProduct']);
+        Route::put('/{product_id}', [ProductController::class, 'updateProduct']);
+        Route::get('/get-my-products-store', [ProductController::class, "getMyProductsStore"]);
+    }));
+    Route::get('/get-products-in-store/{store_id}', [ProductController::class, 'getAllProductsInStore']);
+    Route::get('/', [StoreController::class, 'getAllProducts']);
+    Route::get('/{product_id}', [ProductController::class, "getProductsDetail"]);
+});
