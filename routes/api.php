@@ -10,6 +10,8 @@ Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
 });
 
+
+
 Route::middleware(['auth:sanctum'])
     ->prefix('store')
     ->group(function () {
@@ -21,6 +23,7 @@ Route::middleware(['auth:sanctum'])
         Route::get('/search', [StoreController::class, "filterStoreByName"]);
         Route::get('/', [StoreController::class, "getAllStores"]);
         Route::get('/getMyStore', [StoreController::class, "getMyStore"])->middleware('isStoreOwner');
+        Route::get('/{storeId}/products', [StoreController::class, 'getProductsByStore']);
     });
 Route::middleware(['auth:sanctum'])->prefix('product')->group(function () {
     Route::middleware(['isStoreOwner'])->group((function () {
@@ -28,7 +31,7 @@ Route::middleware(['auth:sanctum'])->prefix('product')->group(function () {
         Route::put('/{product_id}', [ProductController::class, 'updateProduct']);
         Route::get('/get-my-products-store', [ProductController::class, "getMyProductsStore"]);
     }));
-    Route::get('/get-products-in-store/{store_id}', [ProductController::class, 'getAllProductsInStore']);
-    Route::get('/', [StoreController::class, 'getAllProducts']);
-    Route::get('/{product_id}', [ProductController::class, "getProductsDetail"]);
+    Route::get('/', [ProductController::class, 'getAllProducts']);
+    Route::get('/get-product-by-id/{product_id}', [ProductController::class, "getProductDetails"]);
+    Route::get('/search', [ProductController::class, "searchProducts"]);
 });

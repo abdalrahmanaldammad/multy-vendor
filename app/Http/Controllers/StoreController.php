@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -121,5 +122,21 @@ class StoreController extends Controller
 
         // Return the stores
         return response()->json(['stores' => $stores], 200);
+    }
+
+    public function getProductsByStore($storeId)
+    {
+        // Find the store by ID
+        $store = Store::find($storeId);
+
+        // Check if the store exists
+        if (!$store) {
+            return response()->json(['message' => 'Store not found.'], 404);
+        }
+
+        // Get all products for the specified store
+        $products = Product::where('store_id', $store->id)->get();
+
+        return response()->json(['store' => $store->store_name, 'products' => $products], 200);
     }
 }
