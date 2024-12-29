@@ -70,27 +70,18 @@ Route::middleware('auth:sanctum', 'isStoreOwner')->group(function () {
     // Get a specific order by ID (store owner can see their store's order details)
     Route::get('/store/orders/{order_id}', [StoreOrderController::class, 'show']);
     // update the order_status
-    Route::post('/store/orders/update_status/{order_item_id}', [StoreOrderController::class, 'updateStatus']);
+    Route::put('/store/orders/update_status/{order_item_id}', [StoreOrderController::class, 'updateStatus']);
 });
 
 
 
 Route::middleware('auth:sanctum')->group(function () {
     // Add a product to favorites
-    Route::post('/favorites', [FavoriteController::class, 'store']);
+    Route::post('/favorites/{product_id}', [FavoriteController::class, 'store']);
 
     // Remove a product from favorites
-    Route::delete('/favorites/{product}', [FavoriteController::class, 'destroy']);
+    Route::delete('/favorites/{favorite_id}', [FavoriteController::class, 'destroy']);
 
     // Get all user's favorite products
     Route::get('/favorites', [FavoriteController::class, 'index']);
-});
-
-
-
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/favorites', [FavoriteController::class, 'index']);
-    Route::post('/favorites', [FavoriteController::class, 'store']);
-    Route::delete('/favorites/{id}', [FavoriteController::class, 'destroy']);
 });

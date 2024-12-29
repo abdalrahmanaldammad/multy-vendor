@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 class FavoriteController extends Controller
 {
     // Add a product to favorites
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-        ]);
+        // $request->validate([
+        //     'product_id' => 'required|exists:products,id',
+        // ]);
 
         $favorite = Favorite::create([
-            'product_id' => $request->product_id,
+            'product_id' => $id,
             'user_id' => auth()->id(),
         ]);
 

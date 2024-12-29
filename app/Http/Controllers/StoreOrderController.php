@@ -16,9 +16,7 @@ class StoreOrderController extends Controller
         if (!$store) {
             return response()->json(['message' => 'User has no store.'], 404);
         }
-
         $storeId = $store->id;
-
         // Fetch orders with items that belong to the store
         $orders = Order::whereHas('orderItems', function ($query) use ($storeId) {
             $query->where('store_id', $storeId);
